@@ -121,7 +121,11 @@ public class ServiceInterceptor implements InvokeChainProcessor {
 			
 			NewRelic.noticeError(e);
 			
-			throw e;
+			if (e instanceof ServerException) {
+				throw (ServerException) e;
+			} else {
+				throw new ServerException(e);
+			}
 		}
 
 	}
